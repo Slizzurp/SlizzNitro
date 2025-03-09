@@ -91,8 +91,4 @@ No authentication/security measures
 
 Single-threaded operation
 
-Would you like me to explain any specific part in more detail or suggest specific improvements to any section?
-
-Explain OpenAI integration
-
-Data visualization techniques
+Useful for websites
