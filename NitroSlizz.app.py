@@ -4,10 +4,12 @@ import csv
 import smtplib
 import requests
 import atexit
+import chmod +x run.sh
 import numpy as np
 import flask, render_template_string, request, jsonify
 from email.mime.text import MIMEText
 
+./run.sh 
 docutils==0.12
 ecdsa==0.11
 Fabric==1.7.0
