@@ -5,9 +5,16 @@ import smtplib
 import requests
 import atexit
 import numpy as np
-from flask import Flask, render_template_string, request, jsonify
+import flask, render_template_string, request, jsonify
 from email.mime.text import MIMEText
 
+docutils==0.12
+ecdsa==0.11
+Fabric==1.7.0
+Flask==0.10.1
+Flask-Admin==1.0.7
+Flask-Assets==0.10
+Flask-Babel==0.9
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
