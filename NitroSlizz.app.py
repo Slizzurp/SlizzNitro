@@ -8,6 +8,7 @@ import numpy as np
 import flask, render_template_string, request, jsonify
 from email.mime.text import MIMEText
 
+git@github.com:Slizzurp/SlizzNitro.git
 docutils==0.12
 ecdsa==0.11
 Fabric==1.7.0
