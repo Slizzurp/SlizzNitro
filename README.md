@@ -1,5 +1,5 @@
 # SlizzNitro
-Engine Stabilization Methods
+Engine Stabilization Methods.
 Here's a concise 4-prong description of your code as an engine stabilization process script:
 
 ### 1. **Data Generation and Stabilization**
