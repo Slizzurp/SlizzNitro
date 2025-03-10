@@ -8,6 +8,8 @@ import csv
 import smtplib
 import requests
 import atexit
+import pygame
+import random
 import numpy as np
 import flask, render_template_string, request, jsonify
 from email.mime.text import MIMEText
@@ -357,4 +359,82 @@ def clean_exit(save_path="progress_backup.json"):
    
     print("Progress saved and resources optimized. Exiting...")
     sys.exit()
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
+
+def draw_shapes():
+    screen.fill(WHITE)
+
+    # Draw random lines
+    for _ in range(50):
+        start_pos = (random.randint(0, screen_width), random.randint(0, screen_height))
+        end_pos = (random.randint(0, screen_width), random.randint(0, screen_height))
+        pygame.draw.line(screen, BLACK, start_pos, end_pos, 2)
+
+    # Draw targeted lines
+    for _ in range(50):
+        start_pos = (screen_width // 2, screen_height // 2)
+        end_pos = (random.randint(0, screen_width), random.randint(0, screen_height))
+        pygame.draw.line(screen, RED, start_pos, end_pos, 2)
+
+    # Draw random rectangles
+    for _ in range(25):
+        rect_x = random.randint(0, screen_width)
+        rect_y = random.randint(0, screen_height)
+        rect_width = random.randint(20, 100)
+        rect_height = random.randint(20, 100)
+        pygame.draw.rect(screen, BLACK, (rect_x, rect_y, rect_width, rect_height), 2)
+
+    # Draw targeted rectangles
+    for _ in range(25):
+        rect_x = screen_width // 2 - 50
+        rect_y = screen_height // 2 - 50
+        rect_width = random.randint(20, 100)
+        rect_height = random.randint(20, 100)
+        pygame.draw.rect(screen, RED, (rect_x, rect_y, rect_width, rect_height), 2)
+
+    # Draw random circles
+    for _ in range(30):
+        circle_center = (random.randint(0, screen_width), random.randint(0, screen_height))
+        circle_radius = random.randint(10, 50)
+        pygame.draw.circle(screen, BLUE, circle_center, circle_radius, 2)
+
+    # Draw targeted circles
+    for _ in range(30):
+        circle_center = (screen_width // 2, screen_height // 2)
+        circle_radius = random.randint(10, 50)
+        pygame.draw.circle(screen, GREEN, circle_center, circle_radius, 2)
+
+    # Draw random ellipses
+    for _ in range(20):
+        ellipse_rect = pygame.Rect(random.randint(0, screen_width), random.randint(0, screen_height), random.randint(20, 100), random.randint(20, 50))
+        pygame.draw.ellipse(screen, BLACK, ellipse_rect, 2)
+
+    # Draw targeted ellipses
+    for _ in range(20):
+        ellipse_rect = pygame.Rect(screen_width // 2 - 50, screen_height // 2 - 25, random.randint(20, 100), random.randint(20, 50))
+        pygame.draw.ellipse(screen, BLUE, ellipse_rect, 2)
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    draw_shapes()
+    pygame.display.flip()
 clean_exit()
+pygame.quit()
