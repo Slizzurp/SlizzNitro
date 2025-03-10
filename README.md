@@ -1,4 +1,4 @@
-# SlizzNitro and WIF (wireless interface frequency), NitroWIFi.
+# SlizzNitro and WIF (wireless interface frequency), NitroWIFi Pygame.
 Engine Stabilization Methods.
 Here's a concise 4-prong description of the code as an engine stabilization process script:
 
