@@ -92,3 +92,14 @@ No authentication/security measures
 Single-threaded operation
 
 Useful for websites
+
+
+---
+
+**Usage Permission Statement by Mirnes Kudic**
+
+I, Mirnes Kudic, hereby grant access to anyone who is within legal limits to create data and/or for personal use. Users must adhere to the legal boundaries specific to their location while utilizing the provided codes and information. This access is granted under the condition that all applicable laws and regulations are followed.
+
+---
+
+Sent from my iPhone on 03/10/2025, used on Legion laptop.
