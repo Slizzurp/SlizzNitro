@@ -442,3 +442,234 @@ pygame.quit()
 print("Rendering complete.")
 print("Project finalized.")
 print("Thank you for your collaboration!)
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​import pygame
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the display
+WIDTH = 800
+HEIGHT = 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Dynamic Shapes")
+
+# Colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+
+# Target point for "targeted" shapes
+TARGET_X = WIDTH // 2
+TARGET_Y = HEIGHT // 2
+
+def draw_shapes():
+    screen.fill(WHITE)  # Clear screen each frame
+    
+    # Random lines
+    for _ in range(50):
+        start_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+        end_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+        pygame.draw.line(screen, RED, start_pos, end_pos, 2)
+    
+    # Targeted lines
+    for _ in range(50):
+        end_pos = (random.randint(TARGET_X - 50, TARGET_X + 50), random.randint(TARGET_Y - 50, TARGET_Y + 50))
+        pygame.draw.line(screen, RED, (TARGET_X, TARGET_Y), end_pos, 2)
+    
+    # Random rectangles
+    for _ in range(25):
+        rect = (random.randint(0, WIDTH - 50), random.randint(0, HEIGHT - 50), 50, 50)
+        pygame.draw.rect(screen, GREEN, rect, 2)
+    
+    # Targeted rectangles
+    for _ in range(25):
+        rect = (random.randint(TARGET_X - 50, TARGET_X + 50), random.randint(TARGET_Y - 50, TARGET_Y + 50), 30, 30)
+        pygame.draw.rect(screen, GREEN, rect, 2)
+    
+    # Random circles
+    for _ in range(30):
+        center = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+        pygame.draw.circle(screen, BLUE, center, random.randint(10, 30), 2)
+    
+    # Targeted circles
+    for _ in range(30):
+        center = (random.randint(TARGET_X - 50, TARGET_X + 50), random.randint(TARGET_Y - 50, TARGET_Y + 50))
+        pygame.draw.circle(screen, BLUE, center, 20, 2)
+    
+    # Random ellipses
+    for _ in range(20):
+        rect = (random.randint(0, WIDTH - 60), random.randint(0, HEIGHT - 40), 60, 40)
+        pygame.draw.ellipse(screen, YELLOW, rect, 2)
+    
+    # Targeted ellipses
+    for _ in range(20):
+        rect = (random.randint(TARGET_X - 60, TARGET_X + 60), random.randint(TARGET_Y - 40, TARGET_Y + 40), 60, 40)
+        pygame.draw.ellipse(screen, YELLOW, rect, 2)
+
+# Main loop
+running = True
+clock = pygame.time.Clock()
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    draw_shapes()
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​import pygame
+import random
+import math
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the display
+WIDTH = 800
+HEIGHT = 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Dynamic Shapes")
+
+# Colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+
+# Shape lists
+lines = []
+targeted_lines = []
+rects = []
+targeted_rects = []
+circles = []
+targeted_circles = []
+ellipses = []
+targeted_ellipses = []
+
+# Target point (will follow mouse)
+target_pos = [WIDTH // 2, HEIGHT // 2]
+
+# Helper class to store shape properties
+class Shape:
+    def __init__(self, pos, color, size, targeted=False):
+        self.pos = list(pos)
+        self.color = color
+        self.size = size
+        self.targeted = targeted
+        self.angle = random.uniform(0, 2 * math.pi) if targeted else 0
+        self.speed = random.uniform(0.01, 0.05) if targeted else 0
+
+    def update(self):
+        if self.targeted:
+            self.angle += self.speed
+            self.pos[0] = target_pos[0] + math.cos(self.angle) * 100
+            self.pos[1] = target_pos[1] + math.sin(self.angle) * 100
+
+    def is_clicked(self, mouse_pos):
+        # Simple distance check for circles; extend for other shapes if needed
+        if hasattr(self, 'radius'):
+            dist = math.sqrt((self.pos[0] - mouse_pos[0])**2 + (self.pos[1] - mouse_pos[1])**2)
+            return dist <= self.radius
+        return False
+
+# Initialize shapes
+for _ in range(20):  # Reduced counts for better performance
+    lines.append(Shape((random.randint(0, WIDTH), random.randint(0, HEIGHT)), RED, random.randint(20, 50)))
+    targeted_lines.append(Shape((0, 0), RED, random.randint(20, 50), targeted=True))
+    rects.append(Shape((random.randint(0, WIDTH - 50), random.randint(0, HEIGHT - 50)), GREEN, 50))
+    targeted_rects.append(Shape((0, 0), GREEN, 30, targeted=True))
+    circle = Shape((random.randint(0, WIDTH), random.randint(0, HEIGHT)), BLUE, random.randint(10, 30))
+    circle.radius = circle.size
+    circles.append(circle)
+    targeted_circle = Shape((0, 0), BLUE, 20, targeted=True)
+    targeted_circle.radius = targeted_circle.size
+    targeted_circles.append(targeted_circle)
+    ellipses.append(Shape((random.randint(0, WIDTH - 60), random.randint(0, HEIGHT - 40)), YELLOW, (60, 40)))
+    targeted_ellipses.append(Shape((0, 0), YELLOW, (60, 40), targeted=True))
+
+def draw_shapes():
+    screen.fill(WHITE)
+    
+    # Draw lines
+    for line in lines:
+        end_pos = (line.pos[0] + line.size, line.pos[1] + line.size)
+        pygame.draw.line(screen, line.color, line.pos, end_pos, 2)
+    
+    for t_line in targeted_lines:
+        t_line.update()
+        end_pos = (t_line.pos[0], t_line.pos[1])
+        pygame.draw.line(screen, t_line.color, target_pos, end_pos, 2)
+    
+    # Draw rectangles
+    for rect in rects:
+        pygame.draw.rect(screen, rect.color, (rect.pos[0], rect.pos[1], rect.size, rect.size), 2)
+    
+    for t_rect in targeted_rects:
+        t_rect.update()
+        pygame.draw.rect(screen, t_rect.color, (t_rect.pos[0], t_rect.pos[1], t_rect.size, t_rect.size), 2)
+    
+    # Draw circles
+    for circle in circles:
+        pygame.draw.circle(screen, circle.color, (int(circle.pos[0]), int(circle.pos[1])), circle.size, 2)
+    
+    for t_circle in targeted_circles:
+        t_circle.update()
+        pygame.draw.circle(screen, t_circle.color, (int(t_circle.pos[0]), int(t_circle.pos[1])), t_circle.size, 2)
+    
+    # Draw ellipses
+    for ellipse in ellipses:
+        pygame.draw.ellipse(screen, ellipse.color, (ellipse.pos[0], ellipse.pos[1], ellipse.size[0], ellipse.size[1]), 2)
+    
+    for t_ellipse in targeted_ellipses:
+        t_ellipse.update()
+        pygame.draw.ellipse(screen, t_ellipse.color, (t_ellipse.pos[0], t_ellipse.pos[1], t_ellipse.size[0], t_ellipse.size[1]), 2)
+
+# Main loop
+running = True
+clock = pygame.time.Clock()
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEMOTION:
+            target_pos = list(event.pos)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+            # Check for clicks on circles
+            for circle in circles + targeted_circles:
+                if circle.is_clicked(mouse_pos):
+                    circle.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    
+    draw_shapes()
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​import pygame, random  # Line 1: Import required libraries
+pygame.init()  # Line 2: Initialize Pygame
+screen = pygame.display.set_mode((800, 600))  # Line 3: Set up 800x600 display
+clock = pygame.time.Clock()  # Line 4: Create clock for frame rate control
+
+def draw_shapes():  # Line 5: Define draw_shapes function
+    screen.fill((255, 255, 255))  # Line 6: Clear screen with white
+    for _ in range(10):  # Line 7: Draw 10 shapes (reduced for efficiency)
+        pygame.draw.circle(screen, (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), 
+                          (random.randint(0, 800), random.randint(0, 600)), 20, 2)  # Line 8: Random colored circles
+    pygame.display.flip()  # Line 9: Update display
+
+running = True  # Line 10: Main loop setup (assumed to complete the project)
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            draw_shapes()
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
