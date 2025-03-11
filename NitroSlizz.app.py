@@ -438,3 +438,7 @@ while running:
     pygame.display.flip()
 clean_exit()
 pygame.quit()
+
+print("Rendering complete.")
+print("Project finalized.")
+print("Thank you for your collaboration!)
